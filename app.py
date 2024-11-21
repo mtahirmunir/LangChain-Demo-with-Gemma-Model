@@ -1,6 +1,6 @@
 import os
 import streamlit as st
-from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI  # Use ChatOpenAI for chat-based models
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
@@ -16,11 +16,11 @@ prompt = ChatPromptTemplate.from_messages(
 )
 
 # Streamlit UI
-st.title("LangChain Demo with OpenAI GPT Model")
+st.title("LangChain Demo with OpenAI ChatGPT")
 input_text = st.text_input("What question do you have in mind?")
 
-# OpenAI GPT Model
-llm = OpenAI(model="gpt-4", openai_api_key=os.getenv("OPENAI_API_KEY"))
+# OpenAI GPT Model (Chat)
+llm = ChatOpenAI(model="gpt-4", openai_api_key=os.getenv("OPENAI_API_KEY"))
 output_parser = StrOutputParser()
 chain = prompt | llm | output_parser
 
