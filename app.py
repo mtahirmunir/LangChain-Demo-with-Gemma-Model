@@ -6,6 +6,8 @@ from langchain_core.output_parsers import StrOutputParser
 
 # Set up OpenAI API key using Streamlit secrets
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+# Groq api key
+groq_api_key = st.secrets["GROQ_API_KEY"]
 
 # Prompt Template
 prompt = ChatPromptTemplate.from_messages(
