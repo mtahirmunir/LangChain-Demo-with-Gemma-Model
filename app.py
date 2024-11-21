@@ -3,6 +3,7 @@ import streamlit as st
 from langchain.chat_models import ChatOpenAI  # Use ChatOpenAI for chat-based models
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
+from langchain_groq import ChatGroq
 
 # Set up OpenAI API key using Streamlit secrets
 os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
@@ -22,7 +23,8 @@ st.title("LangChain Demo with OpenAI ChatGPT")
 input_text = st.text_input("What question do you have in mind?")
 
 # OpenAI GPT Model (Chat)
-llm = ChatOpenAI(model="gpt-4", openai_api_key=os.getenv("OPENAI_API_KEY"))
+# llm = ChatOpenAI(model="gpt-4", openai_api_key=os.getenv("OPENAI_API_KEY"))
+llm = ChatGroq(model="Gemma2-9b-It",groq_api_key=groq_api_key)
 output_parser = StrOutputParser()
 chain = prompt | llm | output_parser
 
