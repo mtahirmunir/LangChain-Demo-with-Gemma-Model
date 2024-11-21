@@ -1,30 +1,33 @@
 import os
 import streamlit as st
-from langchain_community.llms import Ollama
+from langchain.llms import OpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
-## Langsmith Tracking
-## os.environ["LANGCHAIN_API_KEY"] = st.secrets["LANGCHAIN_API_KEY"]
-## os.environ["LANGCHAIN_TRACING_V2"] = "true"
-## os.environ["LANGCHAIN_PROJECT"] = st.secrets["LANGCHAIN_PROJECT"]
+# Set up OpenAI API key using Streamlit secrets
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
-## Prompt Template
+# Prompt Template
 prompt = ChatPromptTemplate.from_messages(
     [
-        ("system", "You are a helpful assistant. Please respond to the question asked"),
-        ("user", "Question:{question}")
+        ("system", "You are a helpful assistant. Please respond to the question asked."),
+        ("user", "Question: {question}")
     ]
 )
 
-## Streamlit framework
-st.title("Langchain Demo With Gemma Model")
-input_text = st.text_input("What question you have in mind?")
+# Streamlit UI
+st.title("LangChain Demo with OpenAI GPT Model")
+input_text = st.text_input("What question do you have in mind?")
 
-## Ollama Llama2 model
-llm = Ollama(model="gemma:2b")
+# OpenAI GPT Model
+llm = OpenAI(model="gpt-4", openai_api_key=os.getenv("OPENAI_API_KEY"))
 output_parser = StrOutputParser()
 chain = prompt | llm | output_parser
 
+# Generate response
 if input_text:
-    st.write(chain.invoke({"question": input_text}))
+    try:
+        response = chain.invoke({"question": input_text})
+        st.write(response)
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
