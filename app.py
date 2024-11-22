@@ -33,5 +33,6 @@ if input_text:
     try:
         response = chain.invoke({"question": input_text})
         st.write(response)
+        st.text_input("")
     except Exception as e:
         st.error(f"An error occurred: {e}")
